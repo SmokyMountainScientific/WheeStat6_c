@@ -27,15 +27,17 @@ void readCurrent(boolean printI) {
 
   mVi = iRead/16;
   if (gotLims == false){
-    iMax = mVi-2048;
-    iMin = mVi-2048;
-    gotLims = true;
+//    iMax = mVi-2048;
+  //  iMin = mVi-2048;
+  iMax = -mVi+2048;
+  iMin = -mVi+2048;
+  gotLims = true;
   }
   if(mVi >= iMax+2048) {
-   iMax = mVi-2048; 
+   iMax = -mVi+2048; 
   }
   if(mVi <= iMin+2048) {
-    iMin = mVi-2048;
+    iMin = -mVi+2048;
   }
 
  // float cor1 = 0.4253*amplif + 1.2866;
@@ -46,7 +48,8 @@ void readCurrent(boolean printI) {
 
   mVi = res5/res6*mVi/res4;
   float off2 = (165-dOff)*vcc/330/res4;
-  mVi = (mVi -off2)*1000;  // JS-problem with digitization of floats fixed by 1000 fold increase. 
+  ////// Change sign on mVi to conform to sign convention.
+  mVi = (-mVi +off2)*1000;  // JS-problem with digitization of floats fixed by 1000 fold increase. 
 
   if (printI == true) {
     Serial.print(mVi);  
